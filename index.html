@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইউনিভার্সাল সার্চ পোর্টাল</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* সাধারণ স্টাইল */
+        :root {
+            --bg-color: #f4f4f9;
+            --text-color: #333;
+            --container-bg: #fff;
+            --primary-color: #007BFF;
+            --secondary-color: #28a745;
+            --hover-color: #0056b3;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1e1e1e;
+            --text-color: #f4f4f9;
+            --container-bg: #2c2c2c;
+            --primary-color: #1a73e8;
+            --secondary-color: #34a853;
+            --hover-color: #1557b3;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            text-align: center;
+            background: var(--container-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            width: 100%;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        #searchInput {
+            width: 100%;
+            max-width: 800px;
+            padding: 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px 0 0 5px;
+            font-size: 1.2rem;
+            outline: none;
+            background-color: var(--container-bg);
+            color: var(--text-color);
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        #searchButton {
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 0 5px 5px 0;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        #searchButton:hover {
+            background-color: var(--hover-color);
+        }
+
+        .search-engines {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-engines button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-engines button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .theme-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-switch:hover {
+            background-color: var(--hover-color);
+        }
+
+        .results {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .results p {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        /* রেজিস্ট্রেশন ফর্ম স্টাইল */
+        .registration-form {
+            display: none;
+            background: var(--container-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .registration-form h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .registration-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+            background-color: var(--container-bg);
+            color: var(--text-color);
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .registration-form button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .registration-form button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .registration-form p {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .registration-form p a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .registration-form p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ইউনিভার্সাল সার্চ পোর্টাল</h1>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="আপনার সার্চ টার্ম লিখুন...">
+            <button id="searchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="search-engines">
+            <button onclick="search('google')">Google</button>
+            <button onclick="search('bing')">Bing</button>
+            <button onclick="search('yahoo')">Yahoo</button>
+            <button onclick="search('duckduckgo')">DuckDuckGo</button>
+            <button onclick="search('baidu')">Baidu</button>
+            <button onclick="search('yandex')">Yandex</button>
+            <button onclick="search('ask')">Ask.com</button>
+            <button onclick="search('wolframalpha')">WolframAlpha</button>
+            <button onclick="search('startpage')">Startpage</button>
+            <button onclick="search('ecosia')">Ecosia</button>
+            <button onclick="search('naver')">Naver</button>
+            <button onclick="search('sogou')">Sogou</button>
+            <button onclick="search('seznam')">Seznam</button>
+            <button onclick="search('dogpile')">Dogpile</button>
+            <button onclick="search('metacrawler')">MetaCrawler</button>
+            <button onclick="search('lycos')">Lycos</button>
+            <button onclick="search('excite')">Excite</button>
+            <button onclick="search('searchencrypt')">Search Encrypt</button>
+            <button onclick="search('onesearch')">OneSearch</button>
+            <button onclick="search('swisscows')">Swisscows</button>
+            <button onclick="search('pipilika')">Pipilika</button>
+            <button onclick="search('chorki')">Chorki</button>
+            <button onclick="search('metager')">MetaGer</button>
+            <button onclick="search('searx')">Searx</button>
+            <button onclick="search('searxng')">SearxNG</button>
+            <button onclick="search('mojeek')">Mojeek</button>
+            <button onclick="search('qwant')">Qwant</button>
+            <button onclick="search('disconnect')">Disconnect</button>
+            <button onclick="search('brave')">Brave Search</button>
+            <button onclick="search('aol')">AOL Search</button>
+            <button onclick="search('goodsearch')">GoodSearch</button>
+            <button onclick="search('voila')">Voila</button>
+            <button onclick="search('rambler')">Rambler</button>
+            <button onclick="search('yacy')">YaCy</button>
+            <button onclick="search('alexa')">Alexa</button>
+            <button onclick="search('alltheweb')">AllTheWeb</button>
+            <button onclick="search('altaVista')">AltaVista</button>
+            <button onclick="search('archive')">Archive.org</button>
+            <button onclick="search('blekko')">Blekko</button>
+            <button onclick="search('cuil')">Cuil</button>
+            <button onclick="search('entireweb')">Entireweb</button>
+            <button onclick="search('gibiru')">Gibiru</button>
+            <button onclick="search('infospace')">InfoSpace</button>
+            <button onclick="search('ixquick')">Ixquick</button>
+            <button onclick="search('looksmart')">LookSmart</button>
+            <button onclick="search('mywebsearch')">MyWebSearch</button>
+            <button onclick="search('peekier')">Peekier</button>
+            <button onclick="search('sputnik')">Sputnik</button>
+            <button onclick="search('teoma')">Teoma</button>
+            <button onclick="search('wow')">Wow.com</button>
+            <button onclick="search('zapmeta')">ZapMeta</button>
+            <button onclick="search('zoohoo')">Zoohoo</button>
+            <button onclick="search('boardreader')">Boardreader</button>
+            <button onclick="search('millionshort')">Million Short</button>
+            <button onclick="search('searchscene')">SearchScene</button>
+            <button onclick="search('yippy')">Yippy</button>
+            <button onclick="search('biznar')">BizNar</button>
+            <button onclick="search('carrot2')">Carrot2</button>
+            <button onclick="search('clusty')">Clusty</button>
+            <button onclick="search('mamma')">Mamma</button>
+            <button onclick="search('daum')">Daum</button>
+            <button onclick="search('sapo')">SAPO</button>
+            <button onclick="search('walla')">Walla!</button>
+            <button onclick="search('goo')">Goo</button>
+            <button onclick="search('biglobe')">Biglobe</button>
+            <button onclick="search('eniro')">Eniro</button>
+            <button onclick="search('kvasir')">Kvasir</button>
+            <button onclick="search('najdi')">Najdi.si</button>
+            <button onclick="search('orange')">Orange</button>
+            <button onclick="search('virgilio')">Virgilio</button>
+            <button onclick="search('zoznam')">Zoznam</button>
+            <button onclick="search('yamli')">Yamli</button>
+            <button onclick="search('parsijoo')">Parsijoo</button>
+            <button onclick="search('tiger')">Tiger.ch</button>
+            <button onclick="search('webcrawler')">WebCrawler</button>
+            <button onclick="search('info')">Info.com</button>
+            <button onclick="search('searchcom')">Search.com</button>
+            <button onclick="search('weboasis')">WebOasis</button>
+        </div>
+        <div id="results" class="results"></div>
+    </div>
+
+    <!-- রেজিস্ট্রেশন ফর্ম -->
+    <div class="registration-form" id="registrationForm">
+        <h2>রেজিস্ট্রেশন করুন</h2>
+        <input type="text" id="name" placeholder="আপনার নাম">
+        <input type="email" id="email" placeholder="আপনার ইমেইল">
+        <input type="password" id="password" placeholder="পাসওয়ার্ড">
+        <button onclick="registerUser()">রেজিস্ট্রেশন করুন</button>
+        <p>ইতিমধ্যে একটি অ্যাকাউন্ট আছে? <a href="#" onclick="toggleForm()">লগইন করুন</a></p>
+    </div>
+
+    <!-- লগইন ফর্ম -->
+    <div class="registration-form" id="loginForm">
+        <h2>লগইন করুন</h2>
+        <input type="email" id="loginEmail" placeholder="আপনার ইমেইল">
+        <input type="password" id="loginPassword" placeholder="পাসওয়ার্ড">
+        <button onclick="loginUser()">লগইন করুন</button>
+        <p>নতুন ইউজার? <a href="#" onclick="toggleForm()">রেজিস্ট্রেশন করুন</a></p>
+    </div>
+
+    <button class="theme-switch" id="themeSwitch">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <script>
+        // সার্চ ইঞ্জিনের URL ম্যাপিং
+        const searchEngines = {
+            google: 'https://www.google.com/search?q=',
+            bing: 'https://www.bing.com/search?q=',
+            yahoo: 'https://search.yahoo.com/search?p=',
+            duckduckgo: 'https://duckduckgo.com/?q=',
+            baidu: 'https://www.baidu.com/s?wd=',
+            yandex: 'https://yandex.com/search/?text=',
+            ask: 'https://www.ask.com/web?q=',
+            wolframalpha: 'https://www.wolframalpha.com/input/?i=',
+            startpage: 'https://www.startpage.com/do/search?q=',
+            ecosia: 'https://www.ecosia.org/search?q=',
+            naver: 'https://search.naver.com/search.naver?query=',
+            sogou: 'https://www.sogou.com/web?query=',
+            seznam: 'https://search.seznam.cz/?q=',
+            dogpile: 'https://www.dogpile.com/serp?q=',
+            metacrawler: 'https://www.metacrawler.com/serp?q=',
+            lycos: 'https://search.lycos.com/web/?q=',
+            excite: 'https://results.excite.com/serp?q=',
+            searchencrypt: 'https://www.searchencrypt.com/search?q=',
+            onesearch: 'https://www.onesearch.com/yhs/search?q=',
+            swisscows: 'https://swisscows.com/web?query=',
+            pipilika: 'https://www.pipilika.com/search?q=',
+            chorki: 'https://www.chorki.com/search?q=',
+            metager: 'https://metager.org/meta/meta.ger3?eingabe=',
+            searx: 'https://searx.be/search?q=',
+            searxng: 'https://searxng.org/search?q=',
+            mojeek: 'https://www.mojeek.com/search?q=',
+            qwant: 'https://www.qwant.com/?q=',
+            disconnect: 'https://search.disconnect.me/searchTerms/search?q=',
+            brave: 'https://search.brave.com/search?q=',
+            aol: 'https://search.aol.com/aol/search?q=',
+            goodsearch: 'https://www.goodsearch.com/search-web?keywords=',
+            voila: 'https://www.voila.fr/search?q=',
+            rambler: 'https://nova.rambler.ru/search?query=',
+            yacy: 'https://yacy.net/yacy/search.html?query=',
+            alexa: 'https://www.alexa.com/search?q=',
+            alltheweb: 'https://www.alltheweb.com/search?q=',
+            altaVista: 'https://www.altavista.com/web/results?q=',
+            archive: 'https://archive.org/search.php?query=',
+            blekko: 'https://www.blekko.com/ws/',
+            cuil: 'https://www.cuil.com/search?q=',
+            entireweb: 'https://www.entireweb.com/search?q=',
+            gibiru: 'https://gibiru.com/results.html?q=',
+            infospace: 'https://www.infospace.com/serp?q=',
+            ixquick: 'https://www.ixquick.com/do/search?q=',
+            looksmart: 'https://www.looksmart.com/search?q=',
+            mywebsearch: 'https://www.mywebsearch.com/search?q=',
+            peekier: 'https://www.peekier.com/#q=',
+            sputnik: 'https://www.sputnik.ru/search?q=',
+            teoma: 'https://www.teoma.com/web?q=',
+            wow: 'https://www.wow.com/search?q=',
+            zapmeta: 'https://www.zapmeta.com/search?q=',
+            zoohoo: 'https://www.zoohoo.com/search?q=',
+            boardreader: 'https://boardreader.com/s/',
+            millionshort: 'https://millionshort.com/search?q=',
+            searchscene: 'https://www.searchscene.com/search?q=',
+            yippy: 'https://www.yippy.com/search?query=',
+            biznar: 'https://biznar.com/biznar/query.html?q=',
+            carrot2: 'https://search.carrot2.org/#/search/web/',
+            clusty: 'https://clusty.com/search?query=',
+            mamma: 'https://www.mamma.com/search?q=',
+            daum: 'https://search.daum.net/search?q=',
+            sapo: 'https://www.sapo.pt/pesquisa/web?q=',
+            walla: 'https://search.walla.co.il/?q=',
+            goo: 'https://search.goo.ne.jp/web.jsp?q=',
+            biglobe: 'https://search.biglobe.ne.jp/cgi-bin/search?q=',
+            eniro: 'https://www.eniro.se/search?q=',
+            kvasir: 'https://www.kvasir.no/sok?q=',
+            najdi: 'https://www.najdi.si/search.jsp?q=',
+            orange: 'https://www.orange.fr/portail?q=',
+            virgilio: 'https://www.virgilio.it/ricerca?q=',
+            zoznam: 'https://www.zoznam.sk/hladaj.fcgi?q=',
+            yamli: 'https://www.yamli.com/arabic-search/?q=',
+            parsijoo: 'https://www.parsijoo.ir/web?q=',
+            tiger: 'https://www.tiger.ch/search?q=',
+            webcrawler: 'https://www.webcrawler.com/serp?q=',
+            info: 'https://www.info.com/serp?q=',
+            searchcom: 'https://www.search.com/web?q=',
+            weboasis: 'https://web.tecnico.ulisboa.pt/~rui.duarte/weboasis/'
+        };
+
+        // সার্চ ফাংশন
+        function search(engine) {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) {
+                alert('দয়া করে একটি সার্চ টার্ম লিখুন।');
+                return;
+            }
+
+            const url = searchEngines[engine] + encodeURIComponent(query);
+            window.open(url, '_blank');
+        }
+
+        // ডার্ক/লাইট মোড সুইচ
+        const themeSwitch = document.getElementById('themeSwitch');
+        const body = document.body;
+
+        themeSwitch.addEventListener('click', () => {
+            body.dataset.theme = body.dataset.theme === 'dark' ? 'light' : 'dark';
+            themeSwitch.innerHTML = body.dataset.theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // রেজিস্ট্রেশন ফর্ম টগল
+        function toggleForm() {
+            const registrationForm = document.getElementById('registrationForm');
+            const loginForm = document.getElementById('loginForm');
+            registrationForm.style.display = registrationForm.style.display === 'none' ? 'block' : 'none';
+            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // রেজিস্ট্রেশন ফাংশন
+        function registerUser() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!name || !email || !password) {
+                alert('দয়া করে সব ফিল্ড পূরণ করুন।');
+                return;
+            }
+
+            // Google Sheets-এ ডেটা সাবমিট করুন
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwpI8Ln4HVe8gLa8XloY5BxxdEaz_wv7PV9sR_I9NGvmSrNoHbT_kyliRrOA18dm3cQeg/exec';
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('password', password);
+
+            fetch(scriptURL, { method: 'POST', body: JSON.stringify({ name, email, password }) })
+                .then(response => response.text())
+                .then(data => {
+                    alert('রেজিস্ট্রেশন সফল হয়েছে!');
+                    toggleForm();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('রেজিস্ট্রেশন ব্যর্থ হয়েছে।');
+                });
+        }
+
+        // লগইন ফাংশন
+        function loginUser() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!email || !password) {
+                alert('দয়া করে ইমেইল এবং পাসওয়ার্ড পূরণ করুন।');
+                return;
+            }
+
+            // লগইন লজিক এখানে যোগ করুন
+            alert('লগইন সফল হয়েছে!');
+            toggleForm();
+        }
+
+        // সার্চ বাটনে ক্লিক ইভেন্ট যোগ করুন
+        document.getElementById('searchButton').addEventListener('click', () => {
+            const selectedEngine = document.getElementById('engineSelect').value;
+            search(selectedEngine);
+        });
+
+        // Enter কী প্রেস করলে সার্চ করুন
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const selectedEngine = document.getElementById('engineSelect').value;
+                search(selectedEngine);
+            }
+        });
+
+        // সার্চ ইঞ্জিন সিলেক্ট ড্রপডাউন তৈরি করুন
+        const engineSelect = document.createElement('select');
+        engineSelect.id = 'engineSelect';
+        engineSelect.style.marginLeft = '10px';
+        engineSelect.style.padding = '0.5rem';
+        engineSelect.style.borderRadius = '5px';
+        engineSelect.style.border = '2px solid var(--primary-color)';
+        engineSelect.style.backgroundColor = 'var(--container-bg)';
+        engineSelect.style.color = 'var(--text-color)';
+
+        for (const engine in searchEngines) {
+            const option = document.createElement('option');
+            option.value = engine;
+            option.textContent = engine.charAt(0).toUpperCase() + engine.slice(1);
+            engineSelect.appendChild(option);
+        }
+
+        document.querySelector('.search-box').appendChild(engineSelect);
+    </script>
+</body>
+</html>
